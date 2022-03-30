@@ -52,3 +52,23 @@ git branch -m newname
 ### list content 
 
 ls - ltrh 
+
+### Create tag
+
+1. checkout the branch first where you want to create the tag
+2. After that create tag and and push. Follow below commands in sequence 
+
+consider our tag name as 'release-v1.0'
+
+- git checkout <branch name>
+- git tag <tag name> . e,g. git tag release-v1.0 
+- git tag -a release-v1.0 -m "add comments"   use it while adding comments with tag
+- git push --tags
+ 
+Delete a tag 
+ git tag -d <tag name>
+ 
+ push a tag from local to origin branch 
+ git push origin -d release-v1.0
+
+
