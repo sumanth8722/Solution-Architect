@@ -62,5 +62,3 @@ Step 5:
   A video tutorial will be published shortly here https://www.youtube.com/channel/UC5Juuk7aTvbRmrABMq4onJA/videos
   if interested join us at https://e2esolutionarchitect.com/
   
-
-### Ref: https://www.terraform.io/cli/config/config-file
