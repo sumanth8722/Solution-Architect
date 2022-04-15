@@ -1,13 +1,66 @@
 
-# Ref: https://www.terraform.io/cli/config/config-file
 
-Put this in your ~/.terraformrc.
-(by default this file does not exist, create this file .terraformrc add below cache key value. Keep the file locally anywhere and set the path by TF_CLI_CONFIG_FILE
+Business case: Run Terraform offiline
+There are many scenarios where you need to install tools in servers without having internet conenctivity for security reasons. mainly because you are using only your organization's internal network but public internet is not allowed. Here  have provided the steps which you can follow to initialize terraform. Because you know that during  init terraform always tries to look for public terraform registry through internet. and without successful initialization terraform cant plan or validate
 
-plugin_cache_dir   = "$HOME/.terraform.d/plugin-cache"
-disable_checkpoint = true
 
-Then create the cache directory:
-mkdir -p $HOME/.terraform.d/plugin-cache
+### Run Terraform offline 
 
-export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+Step 1: (Using poewrshell, if you are using anything else just to below instructions accordingly)
+Create a directory in your file system. suppose creating "tf_cache" directory in user home ($HOME)
+mkdir "$HOME/tf_cache"
+
+Now simply copy the "registry.terraform.io" folder here. (If you are thinking where will you get it!! While you are conencted to internet. simply run terraform init. it will download .terraform in your working directory. copy "registry.terraform.io" from there and disconnect your internet to make sure below configuration is helping you to run terraform init henceforth without internet connection )
+
+Step 2: 
+Create this file inside above directory.
+For windows, Create a file "terraform.rc", if other OS then create ".terraformrc". Dont miss the '.' and the file should NOT be like "terraform.rc.txt"
+
+Step 3: 
+Update the file terraform.rc or .terraformrc with below code block
+
+provider_installation {
+  filesystem_mirror {
+    path    = "path/to/the/new/directory" # "c:/Users/<username>/tf_cache"
+    include = ["registry.terraform.io/hashicorp/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/hashicorp/*"]
+  }
+}
+
+plugin_cache_dir = "path/to/the/new/directory" # "c:/Users/<username>/tf_cache"
+disable_checkpoint=true
+
+ Step 4: 
+Setup env variables as follows
+  
+  $env:TF_PLUGIN_CACHE_DIR="$HOME/tf_cache"
+  $env:TF_CLI_CONFIG_FILE="$HOME/tf_cache/terraform.rc" # terraform.rc for windows, .terraformrc for linux. eg. "c:/Users/<username>/tf_cache/terraform.rc"
+
+Step 5: 
+  create a directory to run your terraform code
+  simply create a file main.tf
+  write below code
+  
+  terraform {
+  required_version ="~>1.1.8"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.5.0"
+    }
+  }
+}
+
+  Step 6:
+  This is GAME TIME !!
+  Make sure you have your internet disconnected
+  and run terraform init in your working directory. 
+  If you have followed ablove steps properly, terraform init will pull the package from "tf_cache" to your working directory. It will NOT look for pulling from internet terraform registry. 
+  
+  A video tutorial will be published shortly here https://www.youtube.com/channel/UC5Juuk7aTvbRmrABMq4onJA/videos
+  if interested join us at https://e2esolutionarchitect.com/
+  
+
+### Ref: https://www.terraform.io/cli/config/config-file
