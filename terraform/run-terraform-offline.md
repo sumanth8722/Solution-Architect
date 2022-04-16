@@ -3,7 +3,7 @@ Step by Step guide https://somspeaks.com/terraform-offline-setup-and-initializat
 
 ## Run Terraform offline 
 
-## Step 1: (Using poewrshell, if you are using anything else just to below instructions accordingly)
+## Step 1: (Using PowerShell, if you are using anything else just to below instructions accordingly)
 Create a directory in your file system. suppose creating "tf_cache" directory in user home ($HOME)
 ```
 mkdir "$HOME/tf_cache"
