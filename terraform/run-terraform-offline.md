@@ -1,6 +1,9 @@
 
 Step by Step guide https://somspeaks.com/terraform-offline-setup-and-initialization-in-the-windows-system/ 
 
+•	Terraform OFFLINE setup and initialization in Windows system (this article)
+•	Terraform OFFLINE setup and initialization in Unix system on docker (coming soon)
+
 ## Run Terraform offline 
 
 ## Step 1: (Using PowerShell, if you are using anything else just to below instructions accordingly)
