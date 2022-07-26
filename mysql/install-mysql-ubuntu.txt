@@ -1,5 +1,0 @@
-
-sudo apt install mysql-server
-
-`` secure the installation by below command and follow the instructions
-sudo mysql_secure_installation
